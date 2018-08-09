@@ -9,16 +9,18 @@
 
 function AdderCreate(startValue = 0) {
 	this.value = startValue;
-
 	this.func = function () {
 	  	if(arguments.length && arguments[0]) {
+	  		if(typeof arguments[0] !== 'number'){
+				throw "передаваемый параметр должен быть числового типа";
+			}
 	  		this.value += arguments[0];
 	  	} else {
 			console.log(this.value);
 	  	}
 	  	return this.func.bind(this);
-	};
 
+	};
   return this.func.bind(this);
 }
 
@@ -32,7 +34,7 @@ adderInstance2(6)(2)()(6)();
 
 var adderInstance3 = new AdderCreate();
 
-adderInstance3(6)(2)()(6)();
+adderInstance3(6)('2')()(6)();
 
 </script>
 
