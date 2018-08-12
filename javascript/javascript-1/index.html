@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>	</title>
+</head>
+<body>
+	
+<script type="text/javascript">
+
+function AdderCreate(startValue = 0) {
+	this.value = startValue;
+	this.func = function () {
+	  	if(arguments.length && arguments[0]) {
+	  		if(typeof arguments[0] !== 'number'){
+				throw "передаваемый параметр должен быть числового типа";
+			}
+	  		this.value += arguments[0];
+	  	} else {
+			console.log(this.value);
+	  	}
+	  	return this.func.bind(this);
+
+	};
+  return this.func.bind(this);
+}
+
+var adderInstance1 = new AdderCreate();
+
+adderInstance1(5)(2)()(22)();
+
+var adderInstance2 = new AdderCreate(100);
+
+adderInstance2(6)(2)()(6)();
+
+var adderInstance3 = new AdderCreate();
+
+adderInstance3(6)('2')()(6)();
+
+</script>
+
+</body>
+</html>
