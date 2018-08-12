@@ -10,7 +10,7 @@
 
 var fn1 = () => {
 	console.log('fn1')
-	return Promise.resolve(1)
+	return Promise.resolve(5)
 }
 
 var fn2 = () => new Promise(resolve => {
@@ -26,20 +26,23 @@ function promiseReduce(asyncFunctions, reduce, initialValue) {
 	return new Promise(function(resolve, reject) {
 		this.memo = initialValue;
 		
- 		(function loop(){
-			if(!asyncFunctions.length){
-				return resolve(this.memo);
-			}
+ 		(function loop(i){
 
-			asyncFunctions[0]().then(
+			asyncFunctions[i]().then(
 				x => {
+
 					this.memo = reduce.apply(promiseReduce, [this.memo, x]);
-					asyncFunctions.shift()
-					loop();
+
+					if(typeof asyncFunctions[++i] === 'function'){
+						loop(i);
+					} else {
+						resolve(this.memo);
+					}
+					
 				}
 			)
 			
-		})()
+		})(0)
 	})
 
 }
