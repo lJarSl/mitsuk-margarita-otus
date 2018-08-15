@@ -1,16 +1,4 @@
 const fs = require('fs');
-const EventEmitter = require('events');
-const myEmitter = new EventEmitter();
-
-// текущий каталог
-//console.log(process.cwd());
-
-// переданный параметр
-//console.log(process.argv[2]);
-
-
-
-
 
 function tree(stringDir) {
 	if(!stringDir || typeof stringDir != 'string'){
@@ -40,30 +28,38 @@ function tree(stringDir) {
 				  		fs.stat(path, (err, stats) => {
 				  			
 				  			if(stats.isDirectory()){
+
 				  				this.filesAndDirs.dirs.push(path);
+
 				  				loop(path).then(()=>{
+
 				  					counter--;
+				  					
 				  					if(!counter){
 					  					resolve(filesAndDirs);
 				  					}
+
 				  				})
+
 				  			} else {
+
 				  				this.filesAndDirs.files.push(path);
-				  				counter--
+
+				  				counter--;
+
 				  				if(!counter){
 				  					resolve(filesAndDirs);
 				  				}
+
 				  			}
 
 				  		})
 					}
 
-					
 				})
 			})
 
 		}
-
 	
  		loop(stringDir).then((x)=>{
  			resolve(x)
