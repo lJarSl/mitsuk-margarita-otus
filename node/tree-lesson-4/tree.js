@@ -1,72 +1,74 @@
 const fs = require('fs');
+const fsPromises = fs.promises;
 
 function tree(stringDir) {
 	if(!stringDir || typeof stringDir != 'string'){
-		throw 'значения переданы в неправильном формате' 
-	}
+		throw 'ожидается string, передано ' +  typeof stringDir;
+    }
+    
+    async function getPromiceReaddir(dir){
+        return fsPromises.readdir(dir);
+    }
+    async function getPromiseStat(path){
+        return fsPromises.stat(path);
+    }
 
-	return new Promise(function(resolve, reject) {
+    function getStatAll(path, pathsContent){
+        return new Promise(function(resolve, reject) {
+            let pathsContentsCount = pathsContent.length;
+            let files = [], dirs = [];
+            for (let key in pathsContent) {
+                let newPath = `${path}/${pathsContent[key]}`;
+                getPromiseStat(newPath)
+                .then((stat)=>{
+                    pathsContentsCount--;
+                    if(stat.isDirectory()){
+                        dirs.push(newPath);
+                    } else {
+                        files.push(newPath);
+                    }
+                    if(!pathsContentsCount){
+                        resolve({files: files, dirs: dirs});
+                    }
+                })
+            }
+        })
 
-		this.filesAndDirs = {
+    }
+
+    let mainPromise = new Promise(function(resolve, reject) {
+        this.promisesCount = 1;
+        this.filesAndDirs = {
 			files: [],
 			dirs: []
-		};
+        };
+        
+        (function loop(stringDir){
+            getPromiceReaddir(stringDir)
+            .then(files => getStatAll(stringDir, files) )
+            .then(obj => {
+                promisesCount--;
+                filesAndDirs = {
+                    dirs: [...filesAndDirs.dirs, ...obj.dirs],
+                    files: [...filesAndDirs.files, ...obj.files]
+                }
+                if(obj.dirs.length){
+                    for(let key in obj.dirs){
+                        promisesCount++;
+                        loop(obj.dirs[key]);
+                    }
+                }
+                if(!promisesCount){
+                    resolve(filesAndDirs);
+                }
 
-		function loop(stringDir){
+            })
+        })(stringDir)
 
-			return new Promise(function(resolve, reject) {
+    })
 
-				fs.readdir(stringDir, (err, files) => {
-					if (err) throw err;
-
-					var counter = files.length;
-
-				  	for (var key in files) {
-
-				  		let path = `${stringDir}/` + files[key];
-				  		
-				  		fs.stat(path, (err, stats) => {
-				  			
-				  			if(stats.isDirectory()){
-
-				  				this.filesAndDirs.dirs.push(path);
-
-				  				loop(path).then(()=>{
-
-				  					counter--;
-				  					
-				  					if(!counter){
-					  					resolve(filesAndDirs);
-				  					}
-
-				  				})
-
-				  			} else {
-
-				  				this.filesAndDirs.files.push(path);
-
-				  				counter--;
-
-				  				if(!counter){
-				  					resolve(filesAndDirs);
-				  				}
-
-				  			}
-
-				  		})
-					}
-
-				})
-			})
-
-		}
-	
- 		loop(stringDir).then((x)=>{
- 			resolve(x)
- 		});
-	})
-
+	return mainPromise
 }
 
 tree(process.argv[2])
-	.then(console.log)
+    .then(console.log)
