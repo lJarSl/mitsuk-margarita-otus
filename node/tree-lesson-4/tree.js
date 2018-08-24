@@ -44,7 +44,8 @@ function tree(stringDir) {
         };
         
         (function loop(stringDir){
-            getPromiceReaddir(stringDir)
+            Promise.resolve(stringDir)
+            .then(getPromiceReaddir)
             .then(files => getPromiseStatAll(stringDir, files) )
             .then(obj => {
                 promisesCount--;
