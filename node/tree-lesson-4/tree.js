@@ -13,7 +13,7 @@ function tree(stringDir) {
         return fsPromises.stat(path);
     }
 
-    function getStatAll(path, pathsContent){
+    function getPromiseStatAll(path, pathsContent){
         return new Promise(function(resolve, reject) {
             let pathsContentsCount = pathsContent.length;
             let files = [], dirs = [];
@@ -45,7 +45,7 @@ function tree(stringDir) {
         
         (function loop(stringDir){
             getPromiceReaddir(stringDir)
-            .then(files => getStatAll(stringDir, files) )
+            .then(files => getPromiseStatAll(stringDir, files) )
             .then(obj => {
                 promisesCount--;
                 filesAndDirs = {
@@ -63,6 +63,7 @@ function tree(stringDir) {
                 }
 
             })
+            .catch(console.log)
         })(stringDir)
 
     })
