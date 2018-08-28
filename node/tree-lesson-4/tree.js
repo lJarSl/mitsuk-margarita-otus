@@ -1,34 +1,38 @@
-const fs = require('fs');
-const fsPromises = fs.promises;
+const fs = require('fs')
+const fsPromises = fs.promises
 
 function tree(stringDir) {
 	if(!stringDir || typeof stringDir != 'string'){
-		throw 'ожидается string, передано ' +  typeof stringDir;
+		throw 'ожидается string, передано ' +  typeof stringDir
     }
     
     async function getPromiceReaddir(dir){
-        return fsPromises.readdir(dir);
+        return fsPromises.readdir(dir)
     }
     async function getPromiseStat(path){
-        return fsPromises.stat(path);
+        return fsPromises.stat(path)
     }
 
     function getPromiseStatAll(path, pathsContent){
         return new Promise(function(resolve, reject) {
-            let pathsContentsCount = pathsContent.length;
-            let files = [], dirs = [];
+            let pathsContentsCount = pathsContent.length
+            let files = []
+            let dirs = []
             for (let key in pathsContent) {
-                let newPath = `${path}/${pathsContent[key]}`;
+                const newPath = `${path}/${pathsContent[key]}`
                 getPromiseStat(newPath)
-                .then((stat)=>{
-                    pathsContentsCount--;
+                .then((stat) => {
+                    pathsContentsCount--
                     if(stat.isDirectory()){
-                        dirs.push(newPath);
+                        dirs.push(newPath)
                     } else {
-                        files.push(newPath);
+                        files.push(newPath)
                     }
                     if(!pathsContentsCount){
-                        resolve({files: files, dirs: dirs});
+                        resolve({
+                            files: files,
+                            dirs: dirs
+                        })
                     }
                 })
             }
@@ -37,7 +41,7 @@ function tree(stringDir) {
     }
 
     let mainPromise = new Promise(function(resolve, reject) {
-        this.promisesCount = 1;
+        this.promisesCount = 1
         this.filesAndDirs = {
 			files: [],
 			dirs: []
@@ -46,7 +50,7 @@ function tree(stringDir) {
         (function loop(stringDir){
             Promise.resolve(stringDir)
             .then(getPromiceReaddir)
-            .then(files => getPromiseStatAll(stringDir, files) )
+            .then(files => getPromiseStatAll(stringDir, files))
             .then(obj => {
                 promisesCount--;
                 filesAndDirs = {
@@ -55,12 +59,12 @@ function tree(stringDir) {
                 }
                 if(obj.dirs.length){
                     for(let key in obj.dirs){
-                        promisesCount++;
-                        loop(obj.dirs[key]);
+                        promisesCount++
+                        loop(obj.dirs[key])
                     }
                 }
                 if(!promisesCount){
-                    resolve(filesAndDirs);
+                    resolve(filesAndDirs)
                 }
 
             })
