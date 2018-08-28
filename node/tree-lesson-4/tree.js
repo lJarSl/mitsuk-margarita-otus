@@ -2,78 +2,78 @@ const fs = require('fs')
 const fsPromises = fs.promises
 
 function tree(stringDir) {
-	if(!stringDir || typeof stringDir != 'string'){
-		throw 'ожидается string, передано ' +  typeof stringDir
+    if (!stringDir || typeof stringDir != 'string') {
+        throw 'ожидается string, передано ' + typeof stringDir
     }
-    
-    async function getPromiceReaddir(dir){
+
+    async function getPromiceReaddir(dir) {
         return fsPromises.readdir(dir)
     }
-    async function getPromiseStat(path){
+    async function getPromiseStat(path) {
         return fsPromises.stat(path)
     }
 
-    function getPromiseStatAll(path, pathsContent){
-        return new Promise(function(resolve, reject) {
+    function getPromiseStatAll(path, pathsContent) {
+        return new Promise(function (resolve, reject) {
             let pathsContentsCount = pathsContent.length
             let files = []
             let dirs = []
             for (let key in pathsContent) {
                 const newPath = `${path}/${pathsContent[key]}`
                 getPromiseStat(newPath)
-                .then((stat) => {
-                    pathsContentsCount--
-                    if(stat.isDirectory()){
-                        dirs.push(newPath)
-                    } else {
-                        files.push(newPath)
-                    }
-                    if(!pathsContentsCount){
-                        resolve({
-                            files: files,
-                            dirs: dirs
-                        })
-                    }
-                })
+                    .then((stat) => {
+                        pathsContentsCount--
+                        if (stat.isDirectory()) {
+                            dirs.push(newPath)
+                        } else {
+                            files.push(newPath)
+                        }
+                        if (!pathsContentsCount) {
+                            resolve({
+                                files: files,
+                                dirs: dirs
+                            })
+                        }
+                    })
             }
         })
 
     }
 
-    let mainPromise = new Promise(function(resolve, reject) {
+    let mainPromise = new Promise(function (resolve, reject) {
         this.promisesCount = 1
         this.filesAndDirs = {
-			files: [],
-			dirs: []
+            files: [],
+            dirs: []
         };
-        
-        (function loop(stringDir){
-            Promise.resolve(stringDir)
-            .then(getPromiceReaddir)
-            .then(files => getPromiseStatAll(stringDir, files))
-            .then(obj => {
-                promisesCount--;
-                filesAndDirs = {
-                    dirs: [...filesAndDirs.dirs, ...obj.dirs],
-                    files: [...filesAndDirs.files, ...obj.files]
-                }
-                if(obj.dirs.length){
-                    for(let key in obj.dirs){
-                        promisesCount++
-                        loop(obj.dirs[key])
-                    }
-                }
-                if(!promisesCount){
-                    resolve(filesAndDirs)
-                }
 
-            })
-            .catch(console.log)
+        (function loop(stringDir) {
+            Promise.resolve(stringDir)
+                .then(getPromiceReaddir)
+                .then(files => getPromiseStatAll(stringDir, files))
+                .then(obj => {
+                    promisesCount--;
+                    filesAndDirs = {
+                        dirs: [...filesAndDirs.dirs, ...obj.dirs],
+                        files: [...filesAndDirs.files, ...obj.files]
+                    }
+                    if (obj.dirs.length) {
+                        for (let key in obj.dirs) {
+                            promisesCount++
+                            loop(obj.dirs[key])
+                        }
+                    }
+                    if (!promisesCount) {
+                        resolve(filesAndDirs)
+                    }
+
+                })
+                .catch(console.log)
         })(stringDir)
 
     })
 
-	return mainPromise
+    return mainPromise
 }
 
 tree(process.argv[2])
