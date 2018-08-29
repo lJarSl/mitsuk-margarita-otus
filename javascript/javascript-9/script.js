@@ -32,6 +32,6 @@ function getPath(currEl){
     }
 
     var strOut = eachElements(currEl).join('>');
-    console.log(currE);
+    console.log(currEl);
 	alert(strOut);
 }
