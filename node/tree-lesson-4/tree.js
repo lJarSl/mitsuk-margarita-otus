@@ -1,26 +1,19 @@
-const fs = require('fs')
-const fsPromises = fs.promises
+const { promises: { readdir, stat } } = require('fs')
+const path = require('path');
 
 function tree(stringDir) {
     if (!stringDir || typeof stringDir != 'string') {
-        throw 'ожидается string, передано ' + typeof stringDir
+        throw new Error('ожидается string, передано ' + typeof stringDir)
     }
 
-    async function getPromiceReaddir(dir) {
-        return fsPromises.readdir(dir)
-    }
-    async function getPromiseStat(path) {
-        return fsPromises.stat(path)
-    }
-
-    function getPromiseStatAll(path, pathsContent) {
+    function statAll(pathFrom, pathsContent) {
         return new Promise(function (resolve, reject) {
             let pathsContentsCount = pathsContent.length
             let files = []
             let dirs = []
             for (let key in pathsContent) {
-                const newPath = `${path}/${pathsContent[key]}`
-                getPromiseStat(newPath)
+                const newPath = path.join(pathFrom, pathsContent[key])
+                stat(newPath)
                     .then((stat) => {
                         pathsContentsCount--
                         if (stat.isDirectory()) {
@@ -41,16 +34,17 @@ function tree(stringDir) {
     }
 
     let mainPromise = new Promise(function (resolve, reject) {
-        this.promisesCount = 1
-        this.filesAndDirs = {
+
+        let promisesCount = 1,
+            filesAndDirs = {
             files: [],
             dirs: []
         };
 
         (function loop(stringDir) {
             Promise.resolve(stringDir)
-                .then(getPromiceReaddir)
-                .then(files => getPromiseStatAll(stringDir, files))
+                .then(readdir)
+                .then(files => statAll(stringDir, files))
                 .then(obj => {
                     promisesCount--;
                     filesAndDirs = {
