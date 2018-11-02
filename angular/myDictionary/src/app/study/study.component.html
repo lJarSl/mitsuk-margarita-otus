@@ -1,0 +1,6 @@
+<div>
+  <div #question>{{word.name}}</div>
+  <input #myAnswer type="text">
+  <button (click)="onClick(myAnswer.value)">Проверить</button>
+  <div class="myResult">{{checkingResult}}</div>
+</div>
