@@ -1,0 +1,100 @@
+<html>
+    <head></head>
+    <style>
+        .rsslink__body div {
+            margin-bottom: 10px;
+        }
+        .rsslink__output-status {
+            color: green;
+        }
+        .error {
+            color: red!important;
+        }
+    </style>
+    <script>
+
+        function addClass(el, className){
+            if (el.classList) {
+                el.classList.add(className);
+            }
+            else {
+                el.className += ' ' + className;
+            }
+        }
+
+        function removeClass(el) {
+            if (el.classList){
+                el.classList.remove(className);
+            } else {
+                el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            }
+                
+        }
+
+        function saveRssLink(title, link){
+            title = title.trim();
+            link = link.trim();
+
+            if (typeof title !== 'string' || title.length === 0
+            || typeof link !== 'string'  || link.length === 0) {
+                throw new Error('Parameters are expected type String'); 
+            }
+
+            console.log(title.trim(), link.trim());
+
+            let sendObject = {title: title,  link: link};
+            let options = {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(sendObject)
+            }
+
+            fetch('/saverss', options)
+            .then(function(response) {
+                //console.log(response.headers.get('Content-Type'));
+                //console.log(response.status);
+                return response.json();
+            })
+            .then(function(res) {
+                let rsslink__output = document.querySelector('.rsslink__output-status');
+                let rsslink__list = document.querySelector('.rsslink__list');
+                if (res.error) {
+                    rsslink__output.innerHTML = res.error;
+                    addClass(rsslink__output, 'error');
+
+                    return false;
+                }
+
+                rsslink__output.innerHTML = 'rss chanel was added !';
+                rsslink__list.innerHTML += `<div id="rss_cannel_${res.id}" data-id="${res.id}">
+                                                ${title}: ${link}
+                                            </div>`;
+                removeClass(rsslink__output, 'error');
+            })
+            .catch( console.log );
+
+        }
+    </script>
+    <body>
+        <h1 class="header">NodeJS Rest API</h1>
+
+        <div class="rsslink">
+            <div class="rsslink__header">
+                <h2 class="rsslink__title">Rss Cannels</h2>
+            </div>
+            <div class="rsslink__body">
+                <div class="rsslink__name-inp"><input id="rssName" placeholder="имя канала" type="text"></div> 
+                <div class="rsslink__title-inp"><input id="rssLink" placeholder="ссылка" type="text"></div> 
+                <div class="rsslink__btn">
+                    <button onclick="saveRssLink(rssName.value, rssLink.value)">save</button>
+                </div> 
+                <div class="rsslink__output-status"></div>
+                <div class="rsslink__list"></div>
+            </div>
+        </div>
+
+    </body>
+</html>

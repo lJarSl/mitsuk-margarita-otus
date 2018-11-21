@@ -7,7 +7,7 @@
     * [tree](#theme4)
     * [process](#theme6)
     * [rssGrabber](#theme7)
-    * [rssGrabber2](#theme8)
+    * [nodeJSRestAPI](#theme8)
 3. Polymer
     * [customElements](#theme12)
     * [polymerAP](#theme13)
