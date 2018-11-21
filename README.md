@@ -91,6 +91,12 @@ promiseReduce - работа с асинхронными функциями
 Данные должны “течь” `readable -> transformable -> writable` 
 Используйте highWaterMark для ограничения внутреннего буффера.
 
+### Для проверки:
+1.  перейти в каталог node/process-lesson-6/
+2.  выполнить в консоли: npm start
+3.  ввести число
+3.  проверить результат в файле memo.txt
+
 ***
 ### Тема: 7 Стэк MEAN - Express, MongoDB <a name="theme7"></a>
 
