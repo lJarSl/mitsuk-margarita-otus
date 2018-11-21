@@ -19,7 +19,7 @@
     * [calculator](#theme22)
 6. Angular
     * [dictionary](#theme25)
-    * [dictionary2](#theme27)
+    * [dictionary2](#theme27) 
 
 
 ## Месяц 1: Основы JavaScript, NODE, Rest, Mongo
