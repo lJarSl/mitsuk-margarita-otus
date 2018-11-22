@@ -13,6 +13,21 @@ app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
 });
 
+app.get('/getallrss', function(req, res) {
+
+    console.log('getallrss');
+    res.contentType('json');
+
+    db.getAllChannel()
+    .then(function (data) {
+        // handle data
+        console.log(`\n get all rss channels`);
+        res.status(200).send(data);
+    })
+    .catch( console.log );
+
+})
+
 // Todo: отображение сохраненных каналов
 // db.getAllChannel().then(console.log);
 
@@ -34,6 +49,9 @@ app.post('/saverss', function(req, res, next) {
     })
     .catch(next);
 });
+
+
+
 
 const port = 3000; 
 app.listen(port, function () {

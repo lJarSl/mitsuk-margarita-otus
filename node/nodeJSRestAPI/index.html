@@ -10,9 +10,31 @@
         .error {
             color: red!important;
         }
+        .rsslink__output-status {
+            height: 1em;
+        }
     </style>
-    <script>
 
+    <body>
+        <h1 class="header">NodeJS Rest API</h1>
+
+        <div class="rsslink">
+            <div class="rsslink__header">
+                <h2 class="rsslink__title">Rss Cannels</h2>
+            </div>
+            <div class="rsslink__body">
+                <div class="rsslink__name-inp"><input id="rssName" placeholder="имя канала" type="text"></div> 
+                <div class="rsslink__title-inp"><input id="rssLink" placeholder="ссылка" type="text"></div> 
+                <div class="rsslink__output-status"></div>
+                <div class="rsslink__btn">
+                    <button onclick="saveRssLink(rssName.value, rssLink.value)">save</button>
+                </div> 
+                <div class="rsslink__list"></div>
+            </div>
+        </div>
+
+
+    <script>
         function addClass(el, className){
             if (el.classList) {
                 el.classList.add(className);
@@ -77,24 +99,40 @@
             .catch( console.log );
 
         }
-    </script>
-    <body>
-        <h1 class="header">NodeJS Rest API</h1>
 
-        <div class="rsslink">
-            <div class="rsslink__header">
-                <h2 class="rsslink__title">Rss Cannels</h2>
-            </div>
-            <div class="rsslink__body">
-                <div class="rsslink__name-inp"><input id="rssName" placeholder="имя канала" type="text"></div> 
-                <div class="rsslink__title-inp"><input id="rssLink" placeholder="ссылка" type="text"></div> 
-                <div class="rsslink__btn">
-                    <button onclick="saveRssLink(rssName.value, rssLink.value)">save</button>
-                </div> 
-                <div class="rsslink__output-status"></div>
-                <div class="rsslink__list"></div>
-            </div>
-        </div>
+        function getRssChannels() {
+
+             fetch('/getallrss')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(res) {
+                let rsslink__output = document.querySelector('.rsslink__output-status');
+                let rsslink__list = document.querySelector('.rsslink__list');
+                if (res.error) {
+                    rsslink__output.innerHTML = res.error;
+                    addClass(rsslink__output, 'error');
+
+                    return false;
+                }
+
+                res.forEach(function(item, i) {
+                rsslink__list.innerHTML += `<div id="rss_cannel_${item.id}" data-id="${item.id}">
+                                                ${item.title}: ${item.link}
+                                            </div>`;
+                })
+
+            })
+            .catch( console.log );
+
+        }
+
+
+
+        window.onload = function () {
+            getRssChannels();
+        }
+    </script>
 
     </body>
 </html>

@@ -17,7 +17,7 @@ autoIncrement.initialize(connection);
  */
 var Schema = mongoose.Schema;
  const channelsSchema = new Schema({
-    title:  String,
+    title: String,
     link: String
 });
 
