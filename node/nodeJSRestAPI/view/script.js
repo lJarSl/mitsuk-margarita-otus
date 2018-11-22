@@ -52,7 +52,7 @@ function saveRssLink(title, link){
             body: JSON.stringify(sendObject)
         }
     
-        fetch('/saverss', options)
+        fetch('/channel/save', options)
         .then(function(response) {
             return response.json();
         })
@@ -61,9 +61,8 @@ function saveRssLink(title, link){
             let rsslink__output = document.querySelector('.rsslink__output-status');
             let rsslink__list = document.querySelector('.rsslink__list');
             if (res.error) {
-                rsslink__output.innerHTML = res.error;
+                rsslink__output.innerHTML = 'incorrect data';
                 addClass(rsslink__output, 'error');
-    
                 return false;
             }
             resolve(res);
@@ -78,15 +77,16 @@ function saveRssLink(title, link){
  */
 function getRssChannels() {
     return new Promise((resolve, reject) => {
-        fetch('/getallrss')
+        fetch('/channel/get')
         .then(function(response) {
             return response.json();
         })
         .then(function(res) {
             if (res.error) {
-                rsslink__output.innerHTML = res.error;
+                let textError = "There's error in /getallrss server`s response";
+                rsslink__output.innerHTML = textError;
                 addClass(rsslink__output, 'error');
-                throw new Error("There's error in /getallrss server`s response");
+                throw new Error(textError);
             }
             resolve(res);
         })
@@ -101,25 +101,24 @@ function getRssArticlesByChannels(id) {
             throw new Error('Parameters are expected type String'); 
         }
 
-        let sendObject = {id: id};
         let options = {
             headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
             },
-            method: "POST",
-            body: JSON.stringify(sendObject)
+            method: "GET"
         }
 
-        fetch('/articles/get', options)
+        fetch('/articles/get/'+id, options)
         .then(function(response) {
             return response.json();
         })
         .then(function(res) {
             if (res.error) {
-                rsslink__output.innerHTML = res.error;id
+                let textError = "There's error in /getallrss server`s response";
+                rsslink__output.innerHTML = textError;
                 addClass(rsslink__output, 'error');
-                throw new Error("There's error in /getallrss server`s response");
+                throw new Error(textError);
             }
             resolve(res);
         })

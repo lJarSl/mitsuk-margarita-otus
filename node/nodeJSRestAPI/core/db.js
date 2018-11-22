@@ -19,7 +19,7 @@ var Schema = mongoose.Schema;
 
 const articlesSchema = new Schema({
     title: String,
-    link: String
+    link: { type: String, unique: true }
 });
 
 articlesSchema.plugin(autoIncrement.plugin, {
@@ -31,7 +31,7 @@ articlesSchema.plugin(autoIncrement.plugin, {
 
  const channelsSchema = new Schema({
     title: String,
-    link: String,
+    link: { type: String, unique: true },
     articles: [articlesSchema]
 });
 
