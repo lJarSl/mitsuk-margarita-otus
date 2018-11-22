@@ -16,9 +16,23 @@ autoIncrement.initialize(connection);
  * Schema
  */
 var Schema = mongoose.Schema;
- const channelsSchema = new Schema({
+
+const articlesSchema = new Schema({
     title: String,
     link: String
+});
+
+articlesSchema.plugin(autoIncrement.plugin, {
+    model: 'Articles',
+    field: '_id',
+    startAt: 1,
+    incrementBy: 1
+});
+
+ const channelsSchema = new Schema({
+    title: String,
+    link: String,
+    articles: [articlesSchema]
 });
 
 /**
@@ -28,18 +42,17 @@ channelsSchema.plugin(autoIncrement.plugin, {
     model: 'Channel',
     field: '_id',
     startAt: 1,
-    incrementBy: 999999999999
+    incrementBy: 1
 });
 
 /**
- * model
+ * Channel model
  */
 const Channel = connection.model('Channel', channelsSchema);
 
-
 /**
  * new rss link
- * @param {Promice}  
+ * @param {Promice<object>}  
  */
 function saveChannel(data){
     let line = new Channel(data);
@@ -47,11 +60,25 @@ function saveChannel(data){
     return line.save();
 }
 
+/**
+ * get all rss links
+ * @param {Promice<object>}  
+ */
 function getAllChannel() {
     return Channel.find();
 }
 
+/**
+ * 
+ * @param {*} channel_id 
+ */
+function getAllArticlesByChannelId(channel_id) {
+    return Channel.find({_id: channel_id});
+}
+
+
 module.exports = {
     saveChannel: saveChannel,
-    getAllChannel: getAllChannel
+    getAllChannel: getAllChannel,
+    getAllArticlesByChannelId: getAllArticlesByChannelId
 }; 

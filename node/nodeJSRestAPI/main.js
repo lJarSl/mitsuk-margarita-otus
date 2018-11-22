@@ -22,6 +22,7 @@ app.get('/articles', function (req, res) {
     res.sendfile(__dirname + '/view/index2.html');
 });
 
+
 app.get('/getallrss', function(req, res) {
     console.log('getallrss');
     res.contentType('json');
@@ -41,8 +42,15 @@ app.post('/saverss', function(req, res, next) {
     || typeof req.body.link !== 'string'  || req.body.link.length === 0) { 
             res.send({ error: 'Parameters are expected not all' });
         }
-    // saveing channel data into db
-    db.saveChannel({title: req.body.title, link: req.body.link})
+
+    rss.getFromUrl(req.body.link)
+    .then(r => {
+        return db.saveChannel({
+            title: req.body.title,
+            link: req.body.link,
+            articles: r.items
+        })
+    })
     .then(function (data) {
         // handle data
         console.log(`\nrss channel was saved: ${req.body.title} - ${req.body.link}`);
@@ -52,3 +60,16 @@ app.post('/saverss', function(req, res, next) {
 });
 
 
+
+app.post('/articles/get', function (req, res) {
+    console.log('getallarticles');
+    res.contentType('json');
+
+    db.getAllArticlesByChannelId(req.body.id)
+    .then(function (data) {
+        // handle data
+        console.log(`\n get all rss articles`);
+        res.status(200).send({data: data[0].articles});
+    })
+    .catch( console.log );
+});

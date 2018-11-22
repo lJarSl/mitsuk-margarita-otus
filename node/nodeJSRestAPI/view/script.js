@@ -30,50 +30,52 @@ function removeClass(el, className) {
  * add new rss channel into mongodb
  * @param {String} title 
  * @param {String} link 
+ * @returns {Promise<object>}
  */
 function saveRssLink(title, link){
-    title = title.trim();
-    link = link.trim();
-
-    if (typeof title !== 'string' || title.length === 0
-    || typeof link !== 'string'  || link.length === 0) {
-        throw new Error('Parameters are expected type String'); 
-    }
-
-    let sendObject = {title: title,  link: link};
-    let options = {
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify(sendObject)
-    }
-
-    fetch('/saverss', options)
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(res) {
-        let rsslink__output = document.querySelector('.rsslink__output-status');
-        let rsslink__list = document.querySelector('.rsslink__list');
-        if (res.error) {
-            rsslink__output.innerHTML = res.error;
-            addClass(rsslink__output, 'error');
-
-            return false;
+    return new Promise((resolve, reject) => {
+        title = title.trim();
+        link = link.trim();
+    
+        if (typeof title !== 'string' || title.length === 0
+        || typeof link !== 'string'  || link.length === 0) {
+            throw new Error('Parameters are expected type String'); 
         }
-
-        rsslink__output.innerHTML = 'rss chanel was added !';
-        rsslink__list.innerHTML += `<div id="rss_cannel_${res.id}" data-id="${res.id}">
-                                        ${title}: ${link}
-                                    </div>`;
-        removeClass(rsslink__output, 'error');
+    
+        let sendObject = {title: title,  link: link};
+        let options = {
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(sendObject)
+        }
+    
+        fetch('/saverss', options)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(res) {
+            
+            let rsslink__output = document.querySelector('.rsslink__output-status');
+            let rsslink__list = document.querySelector('.rsslink__list');
+            if (res.error) {
+                rsslink__output.innerHTML = res.error;
+                addClass(rsslink__output, 'error');
+    
+                return false;
+            }
+            resolve(res);
+        })
+        .catch( console.log );
     })
-    .catch( console.log );
-
 }
 
+/**
+ * get all rss channels from db
+ * @returns {Promise<object>}
+ */
 function getRssChannels() {
     return new Promise((resolve, reject) => {
         fetch('/getallrss')
@@ -83,6 +85,39 @@ function getRssChannels() {
         .then(function(res) {
             if (res.error) {
                 rsslink__output.innerHTML = res.error;
+                addClass(rsslink__output, 'error');
+                throw new Error("There's error in /getallrss server`s response");
+            }
+            resolve(res);
+        })
+        .catch( console.log );
+    })
+}
+
+function getRssArticlesByChannels(id) {
+    return new Promise((resolve, reject) => {
+
+        if (typeof id !== 'string' || id.length === 0) {
+            throw new Error('Parameters are expected type String'); 
+        }
+
+        let sendObject = {id: id};
+        let options = {
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(sendObject)
+        }
+
+        fetch('/articles/get', options)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(res) {
+            if (res.error) {
+                rsslink__output.innerHTML = res.error;id
                 addClass(rsslink__output, 'error');
                 throw new Error("There's error in /getallrss server`s response");
             }
