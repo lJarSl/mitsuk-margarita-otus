@@ -1,0 +1,45 @@
+<html>
+    <head></head>
+    <link href="/view/styles.css" rel="stylesheet">
+    <script src="/view/script.js"></script>
+    <script>
+        window.onload = function () {
+            let rsslink__output = document.querySelector('.rsslink__output-status');
+            let rsslink__select = document.querySelector('.rsslink__name-select select');
+            getRssChannels()
+            .then(channels => {
+                channels.forEach(function(item, i) {
+                    var option = document.createElement("option");
+                    option.text = item.title;
+                    option.id = item._id;
+                    rsslink__select.add(option);
+                })
+            })
+        }
+    </script>
+    <body>
+        <h1 class="header">NodeJS Rest API</h1>
+
+        <div class="menu">
+            <a href="/">Rss Cannels</a>
+        </div>
+
+        <div class="rsslink">
+            <div class="rsslink__header">
+                <h2 class="rsslink__title">Rss Articles</h2>
+            </div>
+            <div class="rsslink__body">
+                <div class="rsslink__name-select">
+                    <select name="" id="rssId">
+                        <option value="">not selected</option>
+                    </select>
+                </div> 
+                <div class="rsslink__output-status"></div>
+                <div class="rsslink__btn">
+                    <button onclick="getArticles(rssId.value)">read</button>
+                </div> 
+                <div class="rsslink__list"></div>
+            </div>
+        </div>
+    </body>
+</html>
