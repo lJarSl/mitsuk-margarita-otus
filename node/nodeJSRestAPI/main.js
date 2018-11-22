@@ -13,6 +13,14 @@ app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
 });
 
+app.get("/index.html", (req, res) => {
+    res.status(301).redirect("/")
+})
+
+app.get('/articles', function (req, res) {
+    res.sendfile(__dirname + '/index2.html');
+});
+
 app.get('/getallrss', function(req, res) {
 
     console.log('getallrss');
@@ -27,9 +35,6 @@ app.get('/getallrss', function(req, res) {
     .catch( console.log );
 
 })
-
-// Todo: отображение сохраненных каналов
-// db.getAllChannel().then(console.log);
 
 app.post('/saverss', function(req, res, next) {
     res.contentType('json');

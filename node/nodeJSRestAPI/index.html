@@ -18,6 +18,10 @@
     <body>
         <h1 class="header">NodeJS Rest API</h1>
 
+        <div class="menu">
+            <a href="/articles">Rss Articles</a>
+        </div>
+
         <div class="rsslink">
             <div class="rsslink__header">
                 <h2 class="rsslink__title">Rss Cannels</h2>
@@ -32,7 +36,6 @@
                 <div class="rsslink__list"></div>
             </div>
         </div>
-
 
     <script>
         function addClass(el, className){
@@ -76,8 +79,6 @@
 
             fetch('/saverss', options)
             .then(function(response) {
-                //console.log(response.headers.get('Content-Type'));
-                //console.log(response.status);
                 return response.json();
             })
             .then(function(res) {
