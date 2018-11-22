@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 const newsSchema = new Schema({
     title:  String,
-    link: String
+    link: { type: String, unique: true }
 });
 
 /**
