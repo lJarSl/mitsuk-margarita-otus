@@ -22,13 +22,6 @@ const articlesSchema = new Schema({
     link: { type: String, unique: true }
 });
 
-articlesSchema.plugin(autoIncrement.plugin, {
-    model: 'Articles',
-    field: '_id',
-    startAt: 1,
-    incrementBy: 1
-});
-
  const channelsSchema = new Schema({
     title: String,
     link: { type: String, unique: true },
@@ -38,6 +31,12 @@ articlesSchema.plugin(autoIncrement.plugin, {
 /**
  * autoIncrement use
  */
+articlesSchema.plugin(autoIncrement.plugin, {
+    model: 'Articles',
+    field: '_id',
+    startAt: 1,
+    incrementBy: 1
+});
 channelsSchema.plugin(autoIncrement.plugin, {
     model: 'Channel',
     field: '_id',
@@ -69,7 +68,7 @@ function getAllChannel() {
 }
 
 /**
- * 
+ * get All Articles By ChannelId
  * @param {*} channel_id 
  */
 function getAllArticlesByChannelId(channel_id) {

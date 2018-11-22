@@ -23,7 +23,6 @@
             rsslink__btn.onclick = function(e){
                 getRssArticlesByChannels(rssId.value)
                 .then(articles => {
-                    ///console.log(articles);
                     rsslink__list.innerHTML = '';
                     [].forEach.call(articles.data, function(item, i) {
                         rsslink__list.innerHTML += `<div id="rss_cannel_${item.id}" data-id="${item.id}">
