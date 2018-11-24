@@ -4,7 +4,6 @@ var util = require('util');
 util.inherits(RandomStream, ReadableStream);
 
 function RandomStream(max, low, high) {
-    console.log(max, low, high);
   if (!(this instanceof RandomStream)) return new RandomStream(max, low, high);
   if (high < low) high = low;
 
