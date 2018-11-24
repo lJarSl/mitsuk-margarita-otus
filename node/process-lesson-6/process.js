@@ -1,6 +1,5 @@
 var AddStream = require('./addStream');
 var RandomStream = require('./randomStream');
-var util = require('util');
 
 console.log('колличество генерируемых чисел:');
 process.stdin.on('readable', () => {

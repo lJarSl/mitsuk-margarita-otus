@@ -1,4 +1,5 @@
 var ReadableStream = require('stream').Readable;
+var random = require('./random');
 var util = require('util');
 
 util.inherits(RandomStream, ReadableStream);
@@ -22,12 +23,8 @@ RandomStream.prototype._read = function() {
   if (i > this._max) {
     this.push(null);
   } else {
-    this.push(getRandomInt(this._low, this._high + 1));
+    this.push(random(this._low, this._high + 1));
   }
 };
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
 
 module.exports = RandomStream;

@@ -1,5 +1,6 @@
 var util = require('util');
 var assign = require('object-assign');
+var random = require('./random');
 var TransformStream = require('stream').Transform;
 
 util.inherits(StringifyStream, TransformStream);
@@ -16,7 +17,7 @@ function getRandomInt(min, max) {
   }
 
 StringifyStream.prototype._transform = function(chunk, encoding, done) {
-  this.push(JSON.stringify(chunk) + '-' +getRandomInt(0, 100) +'\n');
+  this.push(JSON.stringify(chunk) + '-' + random(0, 100) +'\n');
   done();
 };
 
