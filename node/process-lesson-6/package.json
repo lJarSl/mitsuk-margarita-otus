@@ -1,7 +1,6 @@
 {
   "name": "process-lesson-6",
   "version": "1.0.0",
-  "description": "",
   "main": "process.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,5 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "object-assign": "^4.1.1",
+    "util": "^0.11.1"
+  }
 }

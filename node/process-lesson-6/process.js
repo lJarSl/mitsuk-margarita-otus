@@ -1,13 +1,25 @@
-const fs = require('fs');
-const file = fs.createWriteStream('memo.txt');
+var AddStream = require('./addStream');
+var RandomStream = require('./randomStream');
+var util = require('util');
 
-function getRandom() {
-  return Math.floor(Math.random()*1000);
-}
+RandomStream(10, 0, 100)
+    .pipe(AddStream())
+    .pipe(process.stdout)
 
-process.stdin.on('readable',() => {
-    const data = process.stdin.read();
-    if(data !== null){
-        file.write('number: ' + getRandom() + '-' + data);
+  function runningAverage(len) {
+    var values = [];
+  
+    function addToList(val) {
+      if (!(values.length < len)) values.shift();
+      values.push(val);
     }
-})
+  
+    return function(prev, next, callback) {
+      addToList(next);
+      setImmediate(function() {
+        callback(null, values.reduce(function(a, b) {
+          return a + b;
+        }, 0) / values.length);
+      });
+    };
+  }
