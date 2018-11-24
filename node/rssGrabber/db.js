@@ -22,7 +22,7 @@ const News = mongoose.model('news', newsSchema);
  */
 function saveOne(data){
     let line = new News(data);
-    line.save().then(() => true)
+    return line.save()
 }
 
 module.exports = {
