@@ -1,11 +1,17 @@
 const chalk = require('chalk');
 
-function error(data, status){
+function error(data){
+    if (typeof data === 'object') {
+        data = JSON.stringify(data);
+    }
     data = chalk.red(data);
     console.log(data);
 }
 
-function debug(data, status) {
+function debug(data) {
+    if (typeof data === 'object') {
+        data = JSON.stringify(data);
+    }
     data = chalk.cyan(data);
     console.log(data);
 }
