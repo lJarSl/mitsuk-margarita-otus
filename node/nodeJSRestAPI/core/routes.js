@@ -26,7 +26,7 @@ const actions = {
             res.status(422).send({ error: errorText });
             return;
         }
-        let articles;
+        let articles, channelId;
         rss.getFromUrl(req.body.link)
         .then(r => {
             if(typeof r.items !== 'object' || typeof r.items.length !== 'number'){
@@ -48,21 +48,23 @@ const actions = {
                 res.status(200).send({ error: errorText });
                 return false;
             }
+            channelId = data._id;
+            let promiceArr = [];
             [].forEach.call(articles, el => {
                 let preparedData = {
                     title: el.title,
                     link: el.link,
                     channelId: data._id
                 }
-                db.saveArticle(preparedData)
+                promiceArr[promiceArr.length] = db.saveArticle(preparedData);
             });
-    
+            return Promise.all(promiceArr)
         })
-        // .then(function (data) {
-        //     // handle data
-        //     console.log(`\nrss channel was saved: ${req.body.title} - ${req.body.link}`);
-        //     res.status(201).send({ id: data._id });
-        // })
+        .then(function (data) {
+            // handle data
+            logger.debug(`\nrss channel was saved: ${req.body.title} - ${req.body.link}`);
+            res.status(201).send({ channelId: channelId });
+        })
         .catch(function(errorText){
             logger.error(errorText);
             res.status(418).send({ error: errorText });
