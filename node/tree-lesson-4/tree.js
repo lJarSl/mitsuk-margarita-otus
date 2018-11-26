@@ -67,15 +67,12 @@ function tree(stringDir) {
                     files: [...filesAndDirs.files, ...obj.files]
                 }
                 promisesCount--;
-                
-                console.log(promisesCount);
                 dirsCount = obj.dirs.length;
-                if (dirsCount) {
-                    promisesCount += dirsCount;
-                    return promiseAllP(obj.dirs, loop)
-                }
+                promisesCount += dirsCount;
+                return promiseAllP(obj.dirs, loop)
             })
             .then((obj) => {
+                //console.log(promisesCount);
                 if(promisesCount === 0){
                     resolve(filesAndDirs);
                 }
