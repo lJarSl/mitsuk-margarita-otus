@@ -1,18 +1,18 @@
-const rss = require('./rss');
-const db = require('./db');
+const rss = require('./rss'),
+      db = require('./db'),
+      logger = require('./logger');
 
 const actions = {
 
     getChannel (req, res) {
         db.getAllChannel()
         .then(function (data) {
-            // handle data
-            console.log(`\n get all rss channels`);
+            logger.debug('Get all rss channels');
             res.status(200).send(data);
         })
-        .catch(function(e){
-            console.log(e);
-            res.status(418).send({ error: e });
+        .catch(function(errorText){
+            logger.error(errorText);
+            res.status(418).send({ error: errorText });
             return;
         });
     }, 
@@ -20,19 +20,22 @@ const actions = {
     saveChannel (req, res, next) {
         // checking data
         if(typeof req.body.title !== 'string' || req.body.title.length === 0
-        || typeof req.body.link !== 'string'  || req.body.link.length === 0) { 
-            res.status(422).send({ error: 'Parameters are expected not all' });
+        || typeof req.body.link !== 'string'  || req.body.link.length === 0) {
+            let errorText = 'Parameters are expected not all';
+            logger.error(errorText);
+            res.status(422).send({ error: errorText });
             return;
         }
         let articles;
         rss.getFromUrl(req.body.link)
         .then(r => {
             if(typeof r.items !== 'object' || typeof r.items.length !== 'number'){
-                res.status(200).send({ error: 'bad rss channel =(' });
+                let errorText = 'Bad rss channel =(';
+                logger.error(errorText);
+                res.status(200).send({ error: errorText });
                 return false;
             }
             articles = r.items;
-    
             return db.saveChannel({
                 title: req.body.title,
                 link: req.body.link
@@ -40,7 +43,9 @@ const actions = {
         })
         .then(function(data){
             if(typeof data._id !== 'number'){
-                res.status(200).send({ error: 'saving rss channel fail' });
+                let errorText = 'Saving rss channel fail';
+                logger.error(errorText);
+                res.status(200).send({ error: errorText });
                 return false;
             }
             [].forEach.call(articles, el => {
@@ -58,9 +63,9 @@ const actions = {
         //     console.log(`\nrss channel was saved: ${req.body.title} - ${req.body.link}`);
         //     res.status(201).send({ id: data._id });
         // })
-        .catch(function(e){
-            console.log(e);
-            res.status(418).send({ error: e });
+        .catch(function(errorText){
+            logger.error(errorText);
+            res.status(418).send({ error: errorText });
             return;
         });
     },
@@ -68,13 +73,13 @@ const actions = {
     getArticles (req, res) {
         db.getAllArticlesByChannelId(req.params.id)
         .then(function (data) {
-            // handle data
-            console.log(`\n get all rss articles`);
+            let errorText = 'Get all rss articles';
+            logger.debug(errorText);
             res.status(200).send({data: data});
         })
-        .catch(function(e){
-            console.log(e);
-            res.status(418).send({ error: e });
+        .catch(function(errorText){
+            logger.error(errorText);
+            res.status(418).send({ error: errorText });
             return;
         });
     }

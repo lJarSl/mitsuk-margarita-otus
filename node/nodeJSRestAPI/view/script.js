@@ -67,7 +67,7 @@ function saveRssLink(title, link){
             }
             resolve(res);
         })
-        .catch( console.log );
+        .catch( console.error );
     })
 }
 
@@ -84,14 +84,12 @@ function getRssChannels() {
         .then(function(res) {
             if (res.error) {
                 let textError = "There's error in /getallrss server`s response";
-                //rsslink__output.innerHTML = textError;
-                //addClass(rsslink__output, 'error');
-                return textError;
+                reject(textError);
                 throw new Error(textError);
             }
             resolve(res);
         })
-        .catch( console.log );
+        .catch( console.error );
     })
 }
 
@@ -121,6 +119,6 @@ function getRssArticlesByChannels(id) {
             }
             resolve(res);
         })
-        .catch( console.log );
+        .catch( console.error );
     })
 }

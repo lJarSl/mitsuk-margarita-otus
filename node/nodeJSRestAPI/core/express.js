@@ -1,8 +1,9 @@
-const express = require('express');
-const compression = require('compression');
-const bodyParser = require('body-parser');
+const express = require('express'),
+      compression = require('compression'),
+      bodyParser = require('body-parser'),
+      logger = require('./logger');
 
-var app = express();
+let app = express();
 app.use(compression());
 app.use(bodyParser.json());
 
@@ -16,7 +17,7 @@ app.use('/', express.static('view'));
 function startServer(port){
     port = port || 3000; 
     app.listen(port, function () {
-        console.log('App listening on port ' + port + '!');
+        logger.debug('App listening on port ' + port + '!');
     });
 }
 
