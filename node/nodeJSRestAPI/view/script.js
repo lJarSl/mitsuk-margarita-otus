@@ -77,7 +77,7 @@ function saveRssLink(title, link){
  */
 function getRssChannels() {
     return new Promise((resolve, reject) => {
-        fetch('/channel/get')
+        fetch('/channels')
         .then(function(response) {
             return response.json();
         })
@@ -110,7 +110,7 @@ function getRssArticlesByChannels(id) {
             method: "GET"
         }
 
-        fetch('/articles/get/'+id, options)
+        fetch('/channel/' + id + '/articles', options)
         .then(function(response) {
             return response.json();
         })

@@ -8,11 +8,19 @@ app.use(bodyParser.json());
 
 app.use('/', express.static('view'));
 
-const port = 3000; 
-app.listen(port, function () {
-    console.log('Example app listening on port ' + port + '!');
-});
+/**
+ * Start express listener
+ * Default port has value 3000
+ * @param {*} port 
+ */
+function startServer(port){
+    port = port || 3000; 
+    app.listen(port, function () {
+        console.log('App listening on port ' + port + '!');
+    });
+}
 
 module.exports = {
-    app: app
+    app: app,
+    startOnPort: startServer
 }; 
