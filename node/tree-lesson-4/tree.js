@@ -58,18 +58,11 @@ function tree(stringDir) {
     }
 
     let mainPromise = new Promise((resolve, reject) => {
-
         let promisesCount = 1,
             filesAndDirs = {
             files: [],
             dirs: []
-        }
-
-        let forChecking = []
-        let factChecking = []
-
-        forChecking.push(stringDir);
-
+        };
         (function loop(stringDir) {
             let dirsCount = 0
             Promise.resolve(stringDir)
@@ -80,21 +73,17 @@ function tree(stringDir) {
                     dirs: [...filesAndDirs.dirs, ...obj.dirs],
                     files: [...filesAndDirs.files, ...obj.files]
                 }
-                factChecking.push(stringDir)
                 promisesCount--
                 dirsCount = obj.dirs.length
                 promisesCount += dirsCount
-                forChecking = [...forChecking, ...obj.dirs]
                 return promiseAllP(obj.dirs, loop)
             })
             .then((obj) => {
-                console.log(promisesCount)
                 if(promisesCount === 0){
                     resolve(filesAndDirs)
                 }
             })
             .catch(console.log)
-
         })(stringDir)
     })
     return mainPromise
