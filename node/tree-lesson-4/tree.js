@@ -1,5 +1,5 @@
 const { promises: { readdir, stat}, writeFileSync } = require('fs')
-const path = require('path');
+const path = require('path')
 
 function tree(stringDir) {
     if (!stringDir || typeof stringDir != 'string') {
@@ -11,6 +11,15 @@ function tree(stringDir) {
             let pathsContentsCount = pathsContent.length
             let files = []
             let dirs = []
+
+            // empty directory
+            if (pathsContent.length === 0) {
+                resolve({
+                    files: files,
+                    dirs: dirs
+                })
+                return;
+            }
             for (let key in pathsContent) {
                 const newPath = path.join(pathFrom, pathsContent[key])
                 stat(newPath)
@@ -54,10 +63,15 @@ function tree(stringDir) {
             filesAndDirs = {
             files: [],
             dirs: []
-        };
-        
+        }
+
+        let forChecking = []
+        let factChecking = []
+
+        forChecking.push(stringDir);
+
         (function loop(stringDir) {
-            let dirsCount = 0;
+            let dirsCount = 0
             Promise.resolve(stringDir)
             .then(readdir)
             .then(files => statAll(stringDir, files))
@@ -66,15 +80,17 @@ function tree(stringDir) {
                     dirs: [...filesAndDirs.dirs, ...obj.dirs],
                     files: [...filesAndDirs.files, ...obj.files]
                 }
-                promisesCount--;
-                dirsCount = obj.dirs.length;
-                promisesCount += dirsCount;
+                factChecking.push(stringDir)
+                promisesCount--
+                dirsCount = obj.dirs.length
+                promisesCount += dirsCount
+                forChecking = [...forChecking, ...obj.dirs]
                 return promiseAllP(obj.dirs, loop)
             })
             .then((obj) => {
-                //console.log(promisesCount);
+                console.log(promisesCount)
                 if(promisesCount === 0){
-                    resolve(filesAndDirs);
+                    resolve(filesAndDirs)
                 }
             })
             .catch(console.log)
@@ -86,6 +102,6 @@ function tree(stringDir) {
 
 tree(process.argv[2])
     .then(data => {
-        console.log(data);
-        writeFileSync('./result.txt', JSON.stringify(data));
+        console.log(data)
+        writeFileSync('./result.txt', JSON.stringify(data))
     })

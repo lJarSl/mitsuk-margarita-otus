@@ -1,1 +1,0 @@
-{"dirs":["folder\\1","folder\\12","folder\\1\\2"],"files":["folder\\index.html","folder\\1\\index.html","folder\\12\\index2.html","folder\\12\\index1.html","folder\\1\\2\\index.html"]}
