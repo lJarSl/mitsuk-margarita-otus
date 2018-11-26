@@ -58,31 +58,29 @@ function tree(stringDir) {
         
         (function loop(stringDir) {
             let dirsCount = 0;
-            return new Promise((resolveX, rejectX) => {
-                Promise.resolve(stringDir)
-                .then(readdir)
-                .then(files => statAll(stringDir, files))
-                .then(obj => {
-                    filesAndDirs = {
-                        dirs: [...filesAndDirs.dirs, ...obj.dirs],
-                        files: [...filesAndDirs.files, ...obj.files]
-                    }
-                    promisesCount--;
-                    
-                    //console.log(promisesCount);
-                    dirsCount = obj.dirs.length;
-                    if (dirsCount) {
-                        promisesCount += dirsCount;
-                        return promiseAllP(obj.dirs, loop)
-                    }
-                })
-                .then((obj) => {
-                    if(promisesCount === 0){
-                        resolve(filesAndDirs);
-                    }
-                })
-                .catch(console.log)
+            Promise.resolve(stringDir)
+            .then(readdir)
+            .then(files => statAll(stringDir, files))
+            .then(obj => {
+                filesAndDirs = {
+                    dirs: [...filesAndDirs.dirs, ...obj.dirs],
+                    files: [...filesAndDirs.files, ...obj.files]
+                }
+                promisesCount--;
+                
+                console.log(promisesCount);
+                dirsCount = obj.dirs.length;
+                if (dirsCount) {
+                    promisesCount += dirsCount;
+                    return promiseAllP(obj.dirs, loop)
+                }
             })
+            .then((obj) => {
+                if(promisesCount === 0){
+                    resolve(filesAndDirs);
+                }
+            })
+            .catch(console.log)
 
         })(stringDir)
     })
