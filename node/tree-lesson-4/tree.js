@@ -1,4 +1,4 @@
-const { promises: { readdir, stat } } = require('fs')
+const { promises: { readdir, stat}, writeFileSync } = require('fs')
 const path = require('path');
 
 function tree(stringDir) {
@@ -33,42 +33,64 @@ function tree(stringDir) {
 
     }
 
-    let mainPromise = new Promise(function (resolve, reject) {
+    /**
+     * Promise all
+     */
+    function promiseAllP(items, block) {
+        var promises = [];
+        items.forEach((item, index) => {
+            promises.push( function(item, i) {
+                return new Promise((resolve, reject) => {
+                    resolve(block.apply(this, [item, index, resolve, reject]));
+                });
+            }(item, index))
+        });
+        return Promise.all(promises);
+    }
+
+    let mainPromise = new Promise((resolve, reject) => {
 
         let promisesCount = 1,
             filesAndDirs = {
             files: [],
             dirs: []
         };
-
+        
         (function loop(stringDir) {
-            Promise.resolve(stringDir)
+            let dirsCount = 0;
+            return new Promise((resolveX, rejectX) => {
+                Promise.resolve(stringDir)
                 .then(readdir)
                 .then(files => statAll(stringDir, files))
                 .then(obj => {
-                    promisesCount--;
                     filesAndDirs = {
                         dirs: [...filesAndDirs.dirs, ...obj.dirs],
                         files: [...filesAndDirs.files, ...obj.files]
                     }
-                    if (obj.dirs.length) {
-                        for (let key in obj.dirs) {
-                            promisesCount++
-                            loop(obj.dirs[key])
-                        }
+                    promisesCount--;
+                    
+                    //console.log(promisesCount);
+                    dirsCount = obj.dirs.length;
+                    if (dirsCount) {
+                        promisesCount += dirsCount;
+                        return promiseAllP(obj.dirs, loop)
                     }
-                    if (!promisesCount) {
-                        resolve(filesAndDirs)
+                })
+                .then((obj) => {
+                    if(promisesCount === 0){
+                        resolve(filesAndDirs);
                     }
-
                 })
                 .catch(console.log)
+            })
+
         })(stringDir)
-
     })
-
     return mainPromise
 }
 
 tree(process.argv[2])
-    .then(console.log)
+    .then(data => {
+        console.log(data);
+        writeFileSync('./result.txt', JSON.stringify(data));
+    })
