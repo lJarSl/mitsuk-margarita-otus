@@ -24,11 +24,19 @@
                 getRssArticlesByChannels(rssId.value)
                 .then(articles => {
                     rsslink__list.innerHTML = '';
+                    rsslink__output.innerHTML = '';
+                    removeClass(rsslink__output, 'error');
                     [].forEach.call(articles.data, function(item, i) {
                         rsslink__list.innerHTML += `<div id="rss_cannel_${item.id}" data-id="${item.id}">
                                                         ${item.title}: ${item.link}
                                                     </div>`;
                     });
+                })
+                .catch(function(e){
+                    console.log(e);
+                    rsslink__output.innerHTML = e;
+                    addClass(rsslink__output, 'error');
+                    return;
                 });
 
             }

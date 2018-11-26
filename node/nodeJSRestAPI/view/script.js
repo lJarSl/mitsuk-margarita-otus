@@ -84,8 +84,9 @@ function getRssChannels() {
         .then(function(res) {
             if (res.error) {
                 let textError = "There's error in /getallrss server`s response";
-                rsslink__output.innerHTML = textError;
-                addClass(rsslink__output, 'error');
+                //rsslink__output.innerHTML = textError;
+                //addClass(rsslink__output, 'error');
+                return textError;
                 throw new Error(textError);
             }
             resolve(res);
@@ -114,11 +115,9 @@ function getRssArticlesByChannels(id) {
             return response.json();
         })
         .then(function(res) {
-            if (res.error) {
+            if (res.error || !res || !Object.keys(res).length) {
                 let textError = "There's error in /getallrss server`s response";
-                rsslink__output.innerHTML = textError;
-                addClass(rsslink__output, 'error');
-                throw new Error(textError);
+                reject(textError);
             }
             resolve(res);
         })
