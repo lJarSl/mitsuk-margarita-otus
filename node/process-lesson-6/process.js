@@ -1,12 +1,12 @@
-var AddStream = require('./addStream');
-var RandomStream = require('./randomStream');
+const AddStream = require('./addStream')
+const RandomStream = require('./randomStream')
 
-console.log('колличество генерируемых чисел:');
+console.log('колличество генерируемых чисел:')
 process.stdin.on('readable', () => {
-    const chunk = process.stdin.read();
+    const chunk = process.stdin.read()
     if (chunk !== null) {
-      RandomStream(chunk, 0, 100)
-        .pipe(AddStream())
-        .pipe(process.stdout)
+        RandomStream(chunk, 0, 100)
+            .pipe(AddStream())
+            .pipe(process.stdout)
     }
   });

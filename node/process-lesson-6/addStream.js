@@ -1,24 +1,21 @@
-var util = require('util');
-var assign = require('object-assign');
-var random = require('./random');
-var TransformStream = require('stream').Transform;
+const util = require('util')
+const assign = require('object-assign')
+const random = require('./random')
+const TransformStream = require('stream').Transform
 
-util.inherits(StringifyStream, TransformStream);
+util.inherits(addStream, TransformStream)
 
-function StringifyStream(opt) {
-  if (!(this instanceof StringifyStream)) return new StringifyStream(options);
-  var options = assign(opt || {}, { objectMode: true });
-
-  TransformStream.call(this, options);
+function addStream(opt) {
+    let options = assign(opt || {}, { objectMode: true })
+    if (!(this instanceof addStream)) {
+        return new addStream(options)
+    }
+    TransformStream.call(this, options)
 }
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
+addStream.prototype._transform = function(chunk, encoding, done) {
+  this.push(JSON.stringify(chunk) + '-' + random(0, 100) +'\n')
+  done()
+}
 
-StringifyStream.prototype._transform = function(chunk, encoding, done) {
-  this.push(JSON.stringify(chunk) + '-' + random(0, 100) +'\n');
-  done();
-};
-
-module.exports = StringifyStream;
+module.exports = addStream
