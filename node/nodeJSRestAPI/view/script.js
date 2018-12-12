@@ -52,7 +52,7 @@ function saveRssLink(title, link){
             body: JSON.stringify(sendObject)
         }
     
-        fetch('/channel/save', options)
+        fetch('/channels', options)
         .then(function(response) {
             return response.json();
         })

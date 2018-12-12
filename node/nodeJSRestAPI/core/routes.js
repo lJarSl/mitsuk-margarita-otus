@@ -8,7 +8,7 @@ const actions = {
         db.getAllChannel()
         .then(function (data) {
             logger.debug('Get all rss channels');
-            res.status(200).send(data);
+            res.send(data);
         })
         .catch(function(errorText){
             logger.error(errorText);
@@ -32,7 +32,7 @@ const actions = {
             if(typeof r.items !== 'object' || typeof r.items.length !== 'number'){
                 let errorText = 'Bad rss channel =(';
                 logger.error(errorText);
-                res.status(200).send({ error: errorText });
+                res.send({ error: errorText });
                 return false;
             }
             articles = r.items;
@@ -45,12 +45,12 @@ const actions = {
             if(typeof data._id !== 'number'){
                 let errorText = 'Saving rss channel fail';
                 logger.error(errorText);
-                res.status(200).send({ error: errorText });
+                res.send({ error: errorText });
                 return false;
             }
             channelId = data._id;
             let promiceArr = [];
-            [].forEach.call(articles, el => {
+            articles.map(el => {
                 let preparedData = {
                     title: el.title,
                     link: el.link,
@@ -77,7 +77,7 @@ const actions = {
         .then(function (data) {
             let errorText = 'Get all rss articles';
             logger.debug(errorText);
-            res.status(200).send({data: data});
+            res.send({data: data});
         })
         .catch(function(errorText){
             logger.error(errorText);
@@ -89,7 +89,7 @@ const actions = {
 
 function init(app){
     app.get('/channels', actions.getChannel);
-    app.post('/channel/save', actions.saveChannel);
+    app.post('/channels', actions.saveChannel);
     app.get('/channel/:id/articles', actions.getArticles);
 }
 
