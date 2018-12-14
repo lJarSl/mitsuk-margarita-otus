@@ -11,6 +11,7 @@ import { RecentlyAddedComponent } from './recently-added/recently-added.componen
 import { AddNewComponent } from './add-new/add-new.component';
 import { VocabularService } from './vocabular.service';
 import { SimpleFormComponent } from './simple-form/simple-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SimpleFormComponent } from './simple-form/simple-form.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [{provide:'vocabular', useClass: VocabularService}],
   bootstrap: [AppComponent]
