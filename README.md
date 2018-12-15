@@ -4,10 +4,10 @@
     * [promiseReduce](#theme2) - done
     * [getPath](#theme9) - done
 2. Node
-    * [tree](#theme4)
+    * [tree](#theme4) - done
     * [process](#theme6)
-    * [rssGrabber](#theme7)
-    * [nodeJSRestAPI](#theme8)
+    * [rssGrabber](#theme7) - done
+    * [nodeJSRestAPI](#theme8) - done
 3. Polymer
     * [customElements](#theme12)
     * [polymerAP](#theme13)
@@ -78,6 +78,8 @@ promiseReduce - работа с асинхронными функциями
 2.  выполнить в консоли: npm run tree -- folder
 3.  результаты работы скрипта выводятся в консоль
 
+#### **Выполнено!**
+
 ***
 ### Тема: 6 Node Best Practices - Process <a name="theme6"></a>
 
@@ -106,6 +108,7 @@ https://cyber.sports.ru/rss/all_news.xml
 2.  выполнить в консоли: npm start
 3.  результаты работы скрипта выводятся в консоль
 
+#### **Выполнено!**
 
 ***
 ### Тема 8: Построение Rest API <a name="theme8"></a>
@@ -124,6 +127,8 @@ https://cyber.sports.ru/rss/all_news.xml
 1.  перейти в каталог node/nodeJSRestAPI/
 2.  выполнить в консоли: npm start
 3.  открыть в браузере http://localhost:3000
+
+#### **Выполнено!**
 
 ***
 ### Тема 9: JavaScript - Работа с браузером  <a name="theme9"></a>
