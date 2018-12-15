@@ -1,6 +1,6 @@
 <div>
-  <div #question>{{word.name}}</div>
-  <input #myAnswer type="text" value="{{myAnswer}}">
+  <div #question>{{currentWord.name}}</div>
+  <input type="text" [(ngModel)]="myAnswer" placeholder="name">
   <button (click)="checkWord()">Проверить</button>
   <div class="myResult">{{checkingResult}}</div>
 </div>

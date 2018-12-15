@@ -7,6 +7,7 @@ import { RecentlyAddedComponent }   from './recently-added/recently-added.compon
 import { AddNewComponent }   from './add-new/add-new.component';
 
 const routes: Routes = [
+    { path: '', redirectTo: '/study', pathMatch: 'full' },
     { path: 'settings', component: SettingsComponent },
     { path: 'study', component: StudyComponent },
     { path: 'recently-added', component: RecentlyAddedComponent },

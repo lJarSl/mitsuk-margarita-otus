@@ -10,34 +10,37 @@ import { checkingStats } from '../checkingStats';
 })
 export class StudyComponent implements OnInit {
 
-    myAnswer: ''
+    checkingResult: String = ''
 
-    word: Word = {
-        id: 1,
-        name: 'test',
-        translation: 'test',
-        date: ''
-      }
+    myAnswer: String = ''
+
+    currentWord: Word = {
+            id: 1,
+            name: 'bear',
+            translation: 'медведь',
+            date: ''
+        }
 
     checkingStats: checkingStats = {
-    isCorrect: false,
-    message: 'true :)',
-    extras: {
-        date: new Date(),
-        comparedWords: []
-        }
+        isCorrect: false,
+        message: '',
+        extras: {
+                date: new Date(),
+                comparedWords: []
+            }
     };
 
-    checkingResult = ''
-
-    checkWord(){
-        let value = this.myAnswer.trim();
-        console.log('checking word - ' + value)
-        if(this.word.name === value){
-            this.checkingResult = 'true :)'
+    checkWord(): void {
+        console.log('checking word - ' + this.myAnswer)
+        this.checkingStats.extras.comparedWords = [this.myAnswer, this.currentWord.translation]
+        if(this.myAnswer === this.currentWord.translation){
+            this.checkingStats.isCorrect = true
+            this.checkingStats.message = 'true :)'
         } else {
-            this.checkingResult = 'false :('
+            this.checkingStats.isCorrect = false
+            this.checkingStats.message = 'false :('
         }
+        this.checkingResult = this.checkingStats.message
     }
 
     constructor() { }

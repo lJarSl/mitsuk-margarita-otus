@@ -3,6 +3,6 @@ export class checkingStats {
     message: String;
     extras: {
         date: Date;
-        comparedWords: Array<Number>
+        comparedWords: Array<String>
         }
     };
