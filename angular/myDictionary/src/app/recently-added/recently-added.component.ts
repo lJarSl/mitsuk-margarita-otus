@@ -14,7 +14,6 @@ export class RecentlyAddedComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-      console.log(WORDS);
   }
 
 }

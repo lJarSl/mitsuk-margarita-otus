@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
+    currentPath: String
+
     list = [
         { link: '/settings', title: 'Settings' },
         { link: '/study', title: 'Go'},
@@ -17,15 +18,15 @@ export class MenuComponent implements OnInit {
     ]
 
     constructor(
-        private route: ActivatedRoute,
         private location: Location
-    ) {
-        console.log(route);
+    ) {}
+
+    onSelect(path): void {
+        this.currentPath = path
     }
 
     ngOnInit() {
-        console.log(location.pathname);
-        
+        this.currentPath = location.pathname
     }
 
 }
