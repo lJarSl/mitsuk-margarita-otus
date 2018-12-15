@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Word } from '../word';
 import { checkingStats } from '../checkingStats';
+import { WORDS } from '../mock-words';
 
 
 @Component({
@@ -14,12 +15,7 @@ export class StudyComponent implements OnInit {
 
     myAnswer: String = ''
 
-    currentWord: Word = {
-            id: 1,
-            name: 'bear',
-            translation: 'медведь',
-            date: ''
-        }
+    currentWord: Word = WORDS[2]
 
     checkingStats: checkingStats = {
         isCorrect: false,
