@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
 })
 export class MenuComponent implements OnInit {
 
-    currentPath: String
+    currentPath: String = '/study'
 
     list = [
         { link: '/settings', title: 'Settings' },
@@ -26,7 +26,7 @@ export class MenuComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.currentPath = location.pathname
+        this.currentPath = location.pathname !== '/'? location.pathname : this.currentPath
     }
 
 }
