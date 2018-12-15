@@ -19,7 +19,7 @@
     * [calculator](#theme22)
 6. Angular
     * [dictionary](#theme25)
-    * [dictionary2](#theme27)
+    * [dictionary2](#theme27) 
 
 
 ## Месяц 1: Основы JavaScript, NODE, Rest, Mongo
@@ -92,6 +92,12 @@ promiseReduce - работа с асинхронными функциями
 
 Данные должны “течь” `readable -> transformable -> writable` 
 Используйте highWaterMark для ограничения внутреннего буффера.
+
+### Для проверки:
+1.  перейти в каталог node/process-lesson-6/
+2.  выполнить в консоли: npm start
+2.  указать колличество генерируемых чисел
+3.  результаты работы скрипта выводятся в консоль
 
 ***
 ### Тема: 7 Стэк MEAN - Express, MongoDB <a name="theme7"></a>
