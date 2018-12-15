@@ -101,6 +101,11 @@ promiseReduce - работа с асинхронными функциями
 
 https://cyber.sports.ru/rss/all_news.xml
 
+### Для проверки:
+1.  перейти в каталог node/rssGrabber/
+2.  выполнить в консоли: npm start
+3.  результаты работы скрипта выводятся в консоль
+
 
 ***
 ### Тема 8: Построение Rest API <a name="theme8"></a>

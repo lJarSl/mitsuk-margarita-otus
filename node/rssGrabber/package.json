@@ -1,0 +1,21 @@
+{
+  "name": "rssgrabber",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "node script.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.3.13",
+    "rss-parser": "^3.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
+  }
+}
