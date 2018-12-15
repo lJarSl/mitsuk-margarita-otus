@@ -1,0 +1,12 @@
+.rsslink__body div {
+    margin-bottom: 10px;
+}
+.rsslink__output-status {
+    color: green;
+}
+.error {
+    color: red!important;
+}
+.rsslink__output-status {
+    height: 1em;
+}
