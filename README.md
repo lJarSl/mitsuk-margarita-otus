@@ -7,7 +7,7 @@
     * [tree](#theme4)
     * [process](#theme6)
     * [rssGrabber](#theme7)
-    * [rssGrabber2](#theme8)
+    * [nodeJSRestAPI](#theme8)
 3. Polymer
     * [customElements](#theme12)
     * [polymerAP](#theme13)
@@ -118,7 +118,12 @@ https://cyber.sports.ru/rss/all_news.xml
 - Показ списка всех добавленных `URL` рассылок.
 - Показ всех сохраненных из `RSS` документов.
 
-Приложение должно содержать тесты для всех точек доступа.
+Приложение должно содержать тесты для всех точек доступа. 
+
+### Для проверки:
+1.  перейти в каталог node/nodeJSRestAPI/
+2.  выполнить в консоли: npm start
+3.  открыть в браузере http://localhost:3000
 
 ***
 ### Тема 9: JavaScript - Работа с браузером  <a name="theme9"></a>
