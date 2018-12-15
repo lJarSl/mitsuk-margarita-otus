@@ -9,8 +9,6 @@ import { Word } from '../word';
   styleUrls: ['./recently-added.component.scss']
 })
 export class RecentlyAddedComponent implements OnInit {
-    _date = 'date'
-
     words: Word[] = WORDS
 
   constructor() { }
