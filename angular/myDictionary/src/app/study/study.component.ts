@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Word } from '../word';
 import { checkingStats } from '../checkingStats';
 import { WORDS } from '../mock-words';
+import { VocabularService } from '../vocabular.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class StudyComponent implements OnInit {
 
     myAnswer: String = ''
 
-    currentWord: Word = WORDS[2]
+    currentWord: Word
 
     checkingStats: checkingStats = {
         isCorrect: false,
@@ -25,6 +26,12 @@ export class StudyComponent implements OnInit {
                 comparedWords: []
             }
     };
+    constructor(private vocabularService: VocabularService) { }
+
+    ngOnInit() {
+        this.getWords();
+    }
+
 
     checkWord(): void {
         console.log('checking word - ' + this.myAnswer)
@@ -39,9 +46,13 @@ export class StudyComponent implements OnInit {
         this.checkingResult = this.checkingStats.message
     }
 
-    constructor() { }
-
-    ngOnInit() {
+    getWords(): void {
+        let self = this;
+        this.vocabularService
+                .getWords()
+                .subscribe(words => {
+                    this.currentWord = words[2]
+                });
     }
 
 }

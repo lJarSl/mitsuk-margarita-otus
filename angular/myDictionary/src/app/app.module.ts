@@ -13,6 +13,7 @@ import { VocabularService } from './vocabular.service';
 import { SimpleFormComponent } from './simple-form/simple-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     VocabularComponent,
     RecentlyAddedComponent,
     AddNewComponent,
-    SimpleFormComponent
+    SimpleFormComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
