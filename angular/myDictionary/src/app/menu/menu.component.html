@@ -1,8 +1,10 @@
-<nav>
+<nav mat-tab-nav-bar>
     <div *ngFor="let item of list">
-        <a routerLink="{{item.link}}"
-            [class.selected]="currentPath === item.link"
-            (click)="onSelect(item.link)">
+        <a mat-tab-link
+            routerLink="{{item.link}}"
+            [routerLink]="item.link"
+            routerLinkActive #rla="routerLinkActive"
+            [active]="rla.isActive">
             {{item.title}}
         </a>
     </div>

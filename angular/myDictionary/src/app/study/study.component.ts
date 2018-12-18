@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Word } from '../word';
 import { checkingStats } from '../checkingStats';
-import { WORDS } from '../mock-words';
 import { VocabularService } from '../vocabular.service';
-
 
 @Component({
   selector: 'app-study',
@@ -26,6 +24,7 @@ export class StudyComponent implements OnInit {
                 comparedWords: []
             }
     };
+    
     constructor(private vocabularService: VocabularService) { }
 
     ngOnInit() {

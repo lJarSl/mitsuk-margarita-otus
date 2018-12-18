@@ -10,30 +10,45 @@ import { VocabularComponent } from './vocabular/vocabular.component';
 import { RecentlyAddedComponent } from './recently-added/recently-added.component';
 import { AddNewComponent } from './add-new/add-new.component';
 import { VocabularService } from './vocabular.service';
-import { SimpleFormComponent } from './simple-form/simple-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
 import { MessagesComponent } from './messages/messages.component';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+
+import {DemoMaterialModule} from './material-module';
+
+import { SimpleFormComponent } from './simple-form/simple-form.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MenuComponent,
-    StudyComponent,
-    SettingsComponent,
-    VocabularComponent,
-    RecentlyAddedComponent,
-    AddNewComponent,
-    SimpleFormComponent,
-    MessagesComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule
-  ],
-  providers: [{provide:'vocabular', useClass: VocabularService}],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        MenuComponent,
+        StudyComponent,
+        SettingsComponent,
+        VocabularComponent,
+        RecentlyAddedComponent,
+        AddNewComponent,
+        SimpleFormComponent,
+        MessagesComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DemoMaterialModule
+    ],
+    providers: [
+        {provide:'vocabular', useClass: VocabularService}
+    ],
+    bootstrap: [
+        AppComponent,
+        SimpleFormComponent
+    ]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

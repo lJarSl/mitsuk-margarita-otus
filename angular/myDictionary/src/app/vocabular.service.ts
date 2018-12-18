@@ -9,9 +9,7 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class VocabularService {
-
-  //vocabular: Word[] = WORDS
-
+    
   constructor(private messageService: MessageService) { }
 
   getWords(): Observable<Word[]> {

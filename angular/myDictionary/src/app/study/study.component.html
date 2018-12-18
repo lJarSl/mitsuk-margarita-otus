@@ -1,6 +1,9 @@
-<div>
-  <div #question>{{currentWord.name}}</div>
-  <input type="text" [(ngModel)]="myAnswer" placeholder="name">
-  <button (click)="checkWord()">Проверить</button>
-  <div class="myResult">{{checkingResult}}</div>
-</div>
+<div #question>{{currentWord.name}}</div>
+
+<mat-form-field class="example-full-width">
+    <input matInput [(ngModel)]="myAnswer" placeholder="answer" value="">
+</mat-form-field>
+
+<button mat-button (click)="checkWord()">Next</button>
+
+<div class="myResult">{{checkingResult}}</div>

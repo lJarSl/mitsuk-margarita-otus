@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { WORDS } from '../mock-words';
+import { VocabularService } from '../vocabular.service';
 import { Word } from '../word';
 
 @Component({
@@ -9,11 +8,21 @@ import { Word } from '../word';
   styleUrls: ['./recently-added.component.scss']
 })
 export class RecentlyAddedComponent implements OnInit {
-    words: Word[] = WORDS
+    words: Word[]
 
-  constructor() { }
+  constructor(private vocabularService: VocabularService) { }
 
   ngOnInit() {
+    this.getWords();
   }
+
+  getWords(): void {
+    let self = this;
+    this.vocabularService
+            .getWords()
+            .subscribe(words => {
+                this.words = words
+            });
+    }
 
 }

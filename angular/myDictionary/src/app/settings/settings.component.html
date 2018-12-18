@@ -1,25 +1,26 @@
+<mat-form-field>
+    <mat-label>Language</mat-label>
+    <mat-select value="{{language}}"  [(ngModel)]="language" name="language" (selectionChange)="triggerResize()">
+        <mat-option value="en">English</mat-option>
+        <mat-option value="de">Deutsch</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<br>
+
+<mat-form-field>
+    <mat-label>Nb. of words</mat-label>
+    <mat-select value="{{countWords}}" name="countWords" [(ngModel)]="countWords" (selectionChange)="triggerResize()">
+        <mat-option value="10">10</mat-option>
+        <mat-option value="20">20</mat-option>
+    </mat-select>
+</mat-form-field>
+
 <div>
-    <div>
-      <label for="language">Language</label>
-      <select name="language" id="">
-          <option value="en">English</option>
-          <option value="de">Deutsch</option>
-      </select>
-    </div>
-    <div>
-        <label for="countWords">Nb. of words</label>
-        <select name="countWords" id="">
-                <option value="10">10</option>
-                <option value="20">20</option>
-        </select>
-    </div>
-    <div>
-        <label for="countWords">Answer time</label>
-        <select name="answerTime" id="">
-                <option value="10">10</option>
-                <option value="20">20</option>
-        </select>
-    </div>
-    <button (click)="onClickBack()">Back</button>
-    <button (click)="onClickSave()">Save</button>
+    <label for="answerTime">Answer time {{answerTime}}</label><br>
+    <mat-slider name="answerTime" min="1" max="60" step="1" [(ngModel)]="answerTime" value="{{answerTime}}"></mat-slider>
 </div>
+
+<button mat-button (click)="onClickBack()">Back</button>
+<button mat-button (click)="onClickSave()">Save</button>
+

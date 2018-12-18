@@ -6,9 +6,15 @@
 </div>
 
 <div class="worksheet">
-    <app-menu></app-menu>
-    <div class="content-wrap">
-        <router-outlet></router-outlet>
-    </div>
+
+    <mat-card class="example-card">
+        <app-menu></app-menu>
+        <mat-card-content>
+            <router-outlet></router-outlet>
+        </mat-card-content>
+    </mat-card>
+
     <app-messages></app-messages>
+
 </div>
+
