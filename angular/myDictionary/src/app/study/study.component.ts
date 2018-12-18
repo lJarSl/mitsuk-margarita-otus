@@ -46,7 +46,6 @@ export class StudyComponent implements OnInit {
     }
 
     getWords(): void {
-        let self = this;
         this.vocabularService
                 .getWords()
                 .subscribe(words => {

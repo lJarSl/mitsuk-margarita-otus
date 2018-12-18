@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+
+import { Settings } from '../settings';
+import { SettingsService } from '../settings.service';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -7,11 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-    answerTime: number = 30
-
-    countWords: number = 10
-
-    language: string = 'de'
+    settings: Settings
 
     onClickBack(): void {
         console.log('back');
@@ -22,9 +22,18 @@ export class SettingsComponent implements OnInit {
     
     triggerResize(){}
 
-    constructor() { }
+    constructor(private settingsService: SettingsService) { }
 
     ngOnInit() {
+        this.getSettings()
+    }
+
+    getSettings(): void {
+        this.settingsService
+                .getSettings()
+                .subscribe(data => {
+                    this.settings = data
+                });
     }
 
 }

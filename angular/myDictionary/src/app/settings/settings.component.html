@@ -1,6 +1,6 @@
 <mat-form-field>
     <mat-label>Language</mat-label>
-    <mat-select value="{{language}}"  [(ngModel)]="language" name="language" (selectionChange)="triggerResize()">
+    <mat-select value="{{settings.language}}"  [(ngModel)]="settings.language" name="language" (selectionChange)="triggerResize()">
         <mat-option value="en">English</mat-option>
         <mat-option value="de">Deutsch</mat-option>
     </mat-select>
@@ -10,15 +10,15 @@
 
 <mat-form-field>
     <mat-label>Nb. of words</mat-label>
-    <mat-select value="{{countWords}}" name="countWords" [(ngModel)]="countWords" (selectionChange)="triggerResize()">
+    <mat-select value="{{settings.countWords}}" name="countWords" [(ngModel)]="settings.countWords" (selectionChange)="triggerResize()">
         <mat-option value="10">10</mat-option>
         <mat-option value="20">20</mat-option>
     </mat-select>
 </mat-form-field>
 
 <div>
-    <label for="answerTime">Answer time {{answerTime}}</label><br>
-    <mat-slider name="answerTime" min="1" max="60" step="1" [(ngModel)]="answerTime" value="{{answerTime}}"></mat-slider>
+    <label for="answerTime">Answer time {{settings.answerTime}}</label><br>
+    <mat-slider name="answerTime" min="1" max="60" step="1" [(ngModel)]="settings.answerTime" value="{{settings.answerTime}}"></mat-slider>
 </div>
 
 <button mat-button (click)="onClickBack()">Back</button>
