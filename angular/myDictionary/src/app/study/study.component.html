@@ -1,9 +1,21 @@
 <div #question>{{currentWord.name}}</div>
+<form (submit)="checkAnswer(postForm)" #postForm="ngForm">
+    <mat-form-field class="example-full-width">
+        <input
+          matInput
+          #myAnswer="ngModel"
+          name="myAnswer"
+          rows="3"
+          ngModel
+          placeholder="answer"
+          required
+          minlength="3">
+        <mat-error *ngIf="myAnswer.invalid">Please enter a word translate</mat-error>
+    </mat-form-field>
+    <button mat-button type="submit">Next</button>
+</form>
 
-<mat-form-field class="example-full-width">
-    <input matInput [(ngModel)]="myAnswer" placeholder="answer" value="">
-</mat-form-field>
 
-<button mat-button (click)="checkWord()">Next</button>
+
 
 <div class="myResult">{{checkingResult}}</div>

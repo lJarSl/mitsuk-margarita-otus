@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Word } from '../word';
+import { NgForm } from '@angular/forms';
 import { checkingStats } from '../checkingStats';
 import { VocabularService } from '../vocabular.service';
 
@@ -24,7 +25,7 @@ export class StudyComponent implements OnInit {
                 comparedWords: []
             }
     };
-    
+
     constructor(private vocabularService: VocabularService) { }
 
     ngOnInit() {
@@ -32,10 +33,14 @@ export class StudyComponent implements OnInit {
     }
 
 
-    checkWord(): void {
+    checkAnswer(form: NgForm): void {
+        if (form.invalid) {
+          return;
+        }
+        this.myAnswer = form.value.myAnswer
         console.log('checking word - ' + this.myAnswer)
         this.checkingStats.extras.comparedWords = [this.myAnswer, this.currentWord.translation]
-        if(this.myAnswer === this.currentWord.translation){
+        if (this.myAnswer === this.currentWord.translation) {
             this.checkingStats.isCorrect = true
             this.checkingStats.message = 'true :)'
         } else {
