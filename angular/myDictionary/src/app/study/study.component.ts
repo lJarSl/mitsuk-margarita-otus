@@ -43,11 +43,13 @@ export class StudyComponent implements OnInit {
         if (this.myAnswer === this.currentWord.translation) {
             this.checkingStats.isCorrect = true
             this.checkingStats.message = 'true :)'
+            form.resetForm();
         } else {
             this.checkingStats.isCorrect = false
             this.checkingStats.message = 'false :('
         }
         this.checkingResult = this.checkingStats.message
+
     }
 
     getWords(): void {
