@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { ServersResponseData } from './../models/ServersResponseData.model';
 
 // Todo: https://habr.com/ru/post/425959/
-
 
 @Injectable({
   providedIn: 'root'

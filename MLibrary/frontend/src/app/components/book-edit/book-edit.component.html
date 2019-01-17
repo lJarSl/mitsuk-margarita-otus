@@ -4,9 +4,7 @@
       <h3>Редактирование книги</h3>
     </section>
     <mat-divider></mat-divider>
-  </mat-card>
-  <br>
-  <mat-card>
+    <br>
     <form [formGroup]="editForm" class="editForm">
 
         <mat-form-field class="field-full-width">
@@ -37,7 +35,7 @@
       <br><br>
       <button mat-raised-button color="accent" routerLink="/books">
         <mat-icon>arrow_back_ios</mat-icon>
-        К общему списку
+        К списку книг
       </button>
       <button
         mat-raised-button
@@ -60,11 +58,14 @@
     <button type="button" mat-raised-button color="accent" (click)="fileInput.click()">Выбрать файл</button>
     <button type="button" mat-raised-button color="accent" (click)="onUpload()">Загрузить</button>
 
-    <button type="button" mat-raised-button color="accent" (click)="onUpload()">Удалить файл</button>
+    <!--<button type="button" mat-raised-button color="accent" (click)="onUpload()">Удалить файл</button>-->
 
     <div>
       <app-reading [bookText]="bookText"></app-reading>
     </div>
+
+    <br>
+    <br>
 
   </mat-card>
 </div>

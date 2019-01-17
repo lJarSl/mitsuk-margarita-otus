@@ -1,0 +1,36 @@
+<div>
+  <mat-card>
+      <section class="mat-typography">
+        <h3>Вход</h3>
+      </section>
+      <mat-divider></mat-divider>
+      <br>
+
+      <form [formGroup]="loginForm" class="loginForm">
+
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Логин" formControlName="login" #title>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <input matInput type="password" placeholder="Пароль" formControlName="password" #author>
+        </mat-form-field>
+
+        <br><br>
+        <button mat-raised-button color="accent" routerLink="/reset-passord">
+          Восстановить пароль
+        </button>
+        <button mat-raised-button color="accent" routerLink="/create-account">
+          Зарегистрироватсья
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loginForm.pristine || loginForm.invalid"
+          (click)="login()">Войти</button>
+
+      </form>
+
+  </mat-card>
+</div>

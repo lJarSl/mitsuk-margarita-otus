@@ -11,11 +11,8 @@ var Schema = mongoose.Schema;
 
 const usersSchema = new Schema({
     login: { type: String, unique: true },
-    name: String,
-    lastname: String,
-    password: String,
-    email: String,
-    birthday: Date
+    email: { type: String, unique: true },
+    password: String
 });
 
 /**

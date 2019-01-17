@@ -17,28 +17,6 @@ const actions = {
         });
     }, 
 
-    saveUser (req, res, next) {
-        // checking data
-        if(typeof req.body.title !== 'string' || req.body.title.length === 0
-        || typeof req.body.link !== 'string'  || req.body.link.length === 0) {
-            let errorText = 'Parameters are expected not all';
-            logger.error(errorText);
-            res.status(422).send({ error: errorText });
-            return;
-        }
-        
-        db.saveUser()
-        .then(function (data) {
-            logger.debug('Get all books');
-            res.send(data);
-        })
-        .catch(function(errorText){
-            logger.error(errorText);
-            res.status(400).send({ error: errorText });
-            return;
-        });
-    },
-
     saveBook (req, res) {
         // checking data
         if(typeof req.body.title !== 'string' || req.body.title.length === 0
@@ -199,7 +177,48 @@ const actions = {
                 res.send({state: 'ok', text: file.data.toString()});
             });
         }
-    }
+    },
+
+    checkUser (req, res) {
+
+        let data = {
+            secret: "",
+            success: false
+        }
+
+        res.status(200).send(data);
+        //'invalid credential'
+    },
+
+    registerUser (req, res, next) {
+        // checking data
+        if(typeof req.body.login !== 'string' || req.body.login.length === 0
+        || typeof req.body.email !== 'string'  || req.body.email.length === 0
+        || typeof req.body.password !== 'string'  || req.body.password.length === 0) {
+            let errorText = 'Parameters are expected not all';
+            logger.error(errorText);
+            res.status(422).send({ error: errorText });
+            return;
+        }
+
+        let userData = {
+            login: req.body.login,
+            email: req.body.email,
+            password: req.body.password
+        }
+        
+        db.saveUser(userData)
+        .then(function (data) {
+            logger.debug('save user');
+            res.send(data);
+        })
+        .catch(function(errorText){
+            logger.error(errorText);
+            res.status(400).send({ error: errorText });
+            return;
+        });
+    },
+
 }
 
 function init(app){
@@ -218,8 +237,11 @@ function init(app){
     /**
      * users api
      */
-    app.get('/api/users/:login', actions.getUserByLogin);
-    app.post('/api/users', actions.saveUser);
+    app.post('/api/login', actions.checkUser);
+    app.post('/api/registration', actions.registerUser);
+
+    //app.get('/api/users/:login', actions.getUserByLogin);
+    //app.post('/api/users', actions.saveUser);
     // app.post('/users/update/:login', actions.saveUser);
     // app.get('/users/delete/:id', actions.deleteUser);
     

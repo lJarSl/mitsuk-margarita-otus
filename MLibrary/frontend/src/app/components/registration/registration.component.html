@@ -1,0 +1,40 @@
+<div>
+    <mat-card>
+        <section class="mat-typography">
+          <h3>Регистрация</h3>
+        </section>
+        <mat-divider></mat-divider>
+        <br>
+        <form [formGroup]="registrationForm" class="registrationForm">
+
+          <mat-form-field class="field-full-width">
+            <input matInput placeholder="Логин" formControlName="login" #title>
+          </mat-form-field>
+
+          <mat-form-field class="field-full-width">
+            <input matInput placeholder="Электронный ящик" formControlName="email" #email>
+          </mat-form-field>
+
+          <mat-form-field class="field-full-width">
+            <input matInput type="password" placeholder="Пароль" formControlName="password" #author>
+          </mat-form-field>
+
+          <mat-form-field class="field-full-width">
+            <input matInput type="password" placeholder="Подтверждение пароля" formControlName="confirm" #confirm>
+          </mat-form-field>
+
+          <br><br>
+          <button mat-raised-button color="accent" routerLink="/login">
+            Назад
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="registrationForm.pristine || registrationForm.invalid"
+            (click)="registration()">Отправить</button>
+
+        </form>
+
+    </mat-card>
+  </div>

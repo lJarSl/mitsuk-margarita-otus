@@ -17,6 +17,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 /**
+ * Guargs
+ */
+import { AuthGuard } from './auth.guard';
+
+/**
  * material
  */
 import {
@@ -52,6 +57,10 @@ import { BookCreateComponent } from './components/book-create/book-create.compon
 import { BookService } from './services/book.service';
 import { UserService } from './services/user.service';
 import { ReadingComponent } from './components/reading/reading.component';
+import { LoginComponent } from './components/login/login.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+
 
 @NgModule({
   declarations: [
@@ -62,7 +71,10 @@ import { ReadingComponent } from './components/reading/reading.component';
     UserEditComponent,
     UserLoginComponent,
     BookCreateComponent,
-    ReadingComponent
+    ReadingComponent,
+    LoginComponent,
+    AdminComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +97,8 @@ import { ReadingComponent } from './components/reading/reading.component';
   ],
   providers: [
     BookService,
-    UserService
+    UserService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

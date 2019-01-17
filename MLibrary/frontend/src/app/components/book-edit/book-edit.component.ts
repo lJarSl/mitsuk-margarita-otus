@@ -62,7 +62,7 @@ export class BookEditComponent implements OnInit {
     this.currentBook.author = this.editForm.value.author;
     this.currentBook.date_writed = this.editForm.value.date_writed;
     this.currentBook.desctiption = this.editForm.value.desctiption;
-    this.currentBook.state = this.editForm.value.state ? 1 : 0;
+    this.currentBook.state = +this.editForm.value.state ? 1 : 0;
 
     const bookData: Object = {
       title: this.currentBook.title,
@@ -92,13 +92,8 @@ export class BookEditComponent implements OnInit {
     .uploadFile(fd)
     .subscribe(data => {
       console.log(data);
-      /*if (typeof data.state === 'string' && data.state !== 'ok') {
-        return;
-      }
-      if (typeof data.text === 'string') {
-        this.bookText = data.text;
-      }*/
 
+      this.router.navigate([`/books/edit/${this.currentBook._id}`]);
 
     });
   }
