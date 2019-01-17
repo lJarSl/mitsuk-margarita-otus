@@ -1,0 +1,70 @@
+<div>
+  <mat-card>
+    <section class="mat-typography">
+      <h3>Редактирование книги</h3>
+    </section>
+    <mat-divider></mat-divider>
+  </mat-card>
+  <br>
+  <mat-card>
+    <form [formGroup]="editForm" class="editForm">
+
+        <mat-form-field class="field-full-width">
+            <input matInput placeholder="Название" formControlName="title" #title>
+          </mat-form-field>
+
+          <mat-form-field class="field-full-width">
+            <input matInput placeholder="Автор" formControlName="author" #author>
+          </mat-form-field>
+
+          <mat-form-field class="field-full-width">
+            <input matInput placeholder="Дата написания" formControlName="date_writed" #date_writed>
+          </mat-form-field>
+
+          <mat-form-field class="field-full-width">
+            <textarea matInput placeholder="Описание" rows="5" formControlName="desctiption" #desctiption></textarea>
+          </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <mat-select placeholder="State" formControlName="state" #state>
+          <mat-option value="Off">Off</mat-option>
+          <mat-option value="On">On</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-divider></mat-divider>
+
+      <br><br>
+      <button mat-raised-button color="accent" routerLink="/books">
+        <mat-icon>arrow_back_ios</mat-icon>
+        К общему списку
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="editForm.pristine || editForm.invalid"
+        (click)="editBook()">Сохранить</button>
+
+    </form>
+
+    <br>
+    <h4>
+      Содержание книги
+    </h4>
+    <input
+      style="display: none"
+      type="file"
+      (change)="onFileSelected($event)"
+      #fileInput>
+    <button type="button" mat-raised-button color="accent" (click)="fileInput.click()">Выбрать файл</button>
+    <button type="button" mat-raised-button color="accent" (click)="onUpload()">Загрузить</button>
+
+    <button type="button" mat-raised-button color="accent" (click)="onUpload()">Удалить файл</button>
+
+    <div>
+      <app-reading [bookText]="bookText"></app-reading>
+    </div>
+
+  </mat-card>
+</div>

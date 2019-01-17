@@ -1,0 +1,46 @@
+<div>
+  <br>
+  <mat-card>
+    <section class="mat-typography">
+      <h3>Добавить Новую книгу</h3>
+    </section>
+    <mat-divider></mat-divider>
+  </mat-card>
+  <br>
+  <mat-card>
+    <form [formGroup]="createForm" class="createForm">
+
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Название" formControlName="title" #title>
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Автор" formControlName="author" #author>
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Дата написания" formControlName="date_writed" #date_writed>
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <textarea matInput placeholder="Описание" rows="5"formControlName="desctiption" #desctiption></textarea>
+      </mat-form-field>
+
+      <mat-divider></mat-divider>
+
+      <br><br>
+      <button mat-raised-button color="accent" routerLink="/books">
+        <mat-icon>arrow_back_ios</mat-icon>
+        К общему списку
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="createForm.pristine || createForm.invalid"
+        (click)="addBook(title.value, author.value, date_writed.value, desctiption.value)">Сохранить</button>
+
+    </form>
+  </mat-card>
+
+</div>

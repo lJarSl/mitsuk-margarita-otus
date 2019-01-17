@@ -1,0 +1,51 @@
+<div>
+  <mat-card>
+    <p>
+      В нашей библиотеке <span>{{countBooks}}</span> книг
+    </p>
+    <button mat-raised-button color="primary" routerLink="/books/create">Добавить книгу</button>
+    <br><br>
+    <mat-divider></mat-divider>
+    <br>
+
+    <table mat-table [dataSource]="books" *ngIf="countBooks">
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Название</th>
+        <td mat-cell *matCellDef="let element">{{element.title}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef>Автор</th>
+        <td mat-cell *matCellDef="let element">{{element.author}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date_writed">
+        <th mat-header-cell *matHeaderCellDef>Дата написания</th>
+        <td mat-cell *matCellDef="let element">{{element.date_writed}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef>Статус</th>
+        <td mat-cell *matCellDef="let element">{{element.state}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-right"></th>
+        <td mat-cell *matCellDef="let element" class="mat-column-right">
+          <button mat-button color="primary" routerLink="/books/edit/{{element._id}}" matTooltip="Редактировать книгу">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-button color="warn" (click)="deleteBook(element._id)" matTooltip="Удалить книгу">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+  </mat-card>
+</div>
